@@ -48,7 +48,7 @@ struct NotificationSettings {
                                                   subtitle: message.subtitle,
                                                   body: message.body)
         let aps = APNSwiftPayload(alert: alert, badge: 0, sound: .none, hasContentAvailable: true)
-        let notification = AcmeNotification(acme2: ["notification", "message"], aps: aps)
+        let notification = AcmeNotification(aps: aps)
 
         _ = try APNSwiftConnection.connect(configuration: apnsConfig,
                                            on: group.next()).flatMapThrowing { (connection: APNSwiftConnection) in
@@ -84,11 +84,10 @@ extension Request {
 }
 
 struct AcmeNotification: APNSwiftNotification {
-    let acme2: [String]
-    let payload: APNSwiftPayload
 
-    init(acme2: [String], aps: APNSwiftPayload) {
-        self.acme2 = acme2
-        self.payload = aps
+    var aps: APNSwiftPayload
+
+    init(aps: APNSwiftPayload) {
+        self.aps = aps
     }
 }

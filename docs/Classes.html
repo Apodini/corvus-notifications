@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Classes  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Section/Classes" class="dashAnchor"></a>
+    <a title="Classes  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html"> Docs</a> (97% documented)</p>
+        <p class="header-right">
+          <form role="search" action="search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html"> Reference</a>
+        <img id="carat" src="img/carat.png" />
+        Classes  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/AuthNotificationModifier.html">AuthNotificationModifier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/CreateNotificationModifier.html">CreateNotificationModifier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/UpdateNotificationModifier.html">UpdateNotificationModifier</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions/AuthEndpoint.html">AuthEndpoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/CreateEndpoint.html">CreateEndpoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/UpdateEndpoint.html">UpdateEndpoint</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/NotificationProtocol.html">NotificationProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/RestEndpointModifier.html">RestEndpointModifier</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Classes</h1>
+            <p>The following classes are available globally.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:20corvus_notifications24AuthNotificationModifierC"></a>
+                    <a name="//apple_ref/swift/Class/AuthNotificationModifier" class="dashAnchor"></a>
+                    <a class="token" href="#/s:20corvus_notifications24AuthNotificationModifierC">AuthNotificationModifier</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A class that wraps a component which utilizes a <code>.notify()</code> modifier. That
+allows Corvus to chain modifiers, as it gets treated as any other struct
+conforming to <code>AuthEndpoint</code>. Requires an object <code>A</code> that represents the
+message to send.</p>
+
+                        <a href="Classes/AuthNotificationModifier.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">AuthNotificationModifier</span><span class="o">&lt;</span>
+    <span class="kt">A</span><span class="p">:</span> <span class="kt">AuthEndpoint</span><span class="o">&gt;</span><span class="p">:</span>
+<span class="kt">AuthEndpoint</span><span class="p">,</span> <span class="kt"><a href="Protocols/RestEndpointModifier.html">RestEndpointModifier</a></span> <span class="k">where</span> <span class="kt">A</span><span class="o">.</span><span class="kt">QuerySubject</span><span class="p">:</span> <span class="kt"><a href="Protocols/NotificationProtocol.html">NotificationProtocol</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:20corvus_notifications26CreateNotificationModifierC"></a>
+                    <a name="//apple_ref/swift/Class/CreateNotificationModifier" class="dashAnchor"></a>
+                    <a class="token" href="#/s:20corvus_notifications26CreateNotificationModifierC">CreateNotificationModifier</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A class that wraps a component which utilizes a <code>.notify()</code> modifier. That
+allows Corvus to chain modifiers, as it gets treated as any other struct
+conforming to <code>CreateEndpoint</code>. Requires an object <code>A</code> that represents the
+message to send.</p>
+
+                        <a href="Classes/CreateNotificationModifier.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">CreateNotificationModifier</span><span class="o">&lt;</span>
+    <span class="kt">A</span><span class="p">:</span> <span class="kt">CreateEndpoint</span><span class="o">&gt;</span><span class="p">:</span>
+<span class="kt">CreateEndpoint</span><span class="p">,</span> <span class="kt"><a href="Protocols/RestEndpointModifier.html">RestEndpointModifier</a></span> <span class="k">where</span> <span class="kt">A</span><span class="o">.</span><span class="kt">QuerySubject</span><span class="p">:</span> <span class="kt"><a href="Protocols/NotificationProtocol.html">NotificationProtocol</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:20corvus_notifications26UpdateNotificationModifierC"></a>
+                    <a name="//apple_ref/swift/Class/UpdateNotificationModifier" class="dashAnchor"></a>
+                    <a class="token" href="#/s:20corvus_notifications26UpdateNotificationModifierC">UpdateNotificationModifier</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A class that wraps a component which utilizes a <code>.notify()</code> modifier. That
+allows Corvus to chain modifiers, as it gets treated as any other struct
+conforming to <code>CreateEndpoint</code>. Requires an object <code>A</code> that represents the
+message to send.</p>
+
+                        <a href="Classes/UpdateNotificationModifier.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">UpdateNotificationModifier</span><span class="o">&lt;</span>
+    <span class="kt">A</span><span class="p">:</span> <span class="kt">UpdateEndpoint</span><span class="o">&gt;</span><span class="p">:</span>
+<span class="kt">UpdateEndpoint</span><span class="p">,</span> <span class="kt"><a href="Protocols/RestEndpointModifier.html">RestEndpointModifier</a></span> <span class="k">where</span> <span class="kt">A</span><span class="o">.</span><span class="kt">QuerySubject</span><span class="p">:</span> <span class="kt"><a href="Protocols/NotificationProtocol.html">NotificationProtocol</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-09-18)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

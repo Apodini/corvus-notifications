@@ -116,7 +116,7 @@ final class NotificationsTest: CorvusNotificationsTests {
         try app.testable()
             .test(
                 .PUT,
-                "/api/groupchats/\(group1.id)",
+                "/api/groupchats/\(String(describing: group1.id))",
                 headers: ["content-type": "application/json"],
                 body: groupChat.encode()
             ).test(.GET, "/api/accounts/\(group1ID)") { res in
