@@ -16,9 +16,12 @@ final class NotificationsTest: CorvusNotificationsTests {
         let api = Api("api") {
             Group("groupchats") {
                 Create<GroupChat>().notify()
-                ReadOne<GroupChat>(groupChatParameter).notify()
-                Update<GroupChat>(groupChatParameter).notify()
-                Delete<GroupChat>(groupChatParameter).notify()
+                ReadAll<GroupChat>()
+                Group(groupChatParameter) {
+                    ReadOne<GroupChat>(groupChatParameter).notify()
+                    Update<GroupChat>(groupChatParameter).notify()
+                    Delete<GroupChat>(groupChatParameter).notify()
+                }
             }
         }
 
@@ -26,24 +29,6 @@ final class NotificationsTest: CorvusNotificationsTests {
     }
 
     func testCreateNotification() throws {
-
-        final class CreateNotificationTest: RestApi {
-            var content: Endpoint {
-                Group("api", "groupchats") {
-                    Create<GroupChat>().notify()
-                }
-            }
-        }
-
-        let app = Application(.testing)
-        defer { app.shutdown() }
-        let createNotificationTest = CreateNotificationTest()
-        app.databases.use( .sqlite(.memory), as: .init(string: "CorvusNotificationsTest"), isDefault: true
-        )
-        app.migrations.add(CreateGroupChat())
-        try app.autoMigrate().wait()
-        try app.register(collection: createNotificationTest)
-
         let groupChat = GroupChat(id: UUID(),
                                   recipients: ["salnvdv"],
                                   title: "Test Group",
@@ -63,94 +48,64 @@ final class NotificationsTest: CorvusNotificationsTests {
     }
 
     func testReadNotification() throws {
-        final class ReadNotificationTest: RestApi {
-            let groupChatParameter = Parameter<GroupChat>().id
-
-            var content: Endpoint {
-                Group("api", "groupchats") {
-                    ReadOne<GroupChat>(groupChatParameter).notify()
-                }
-            }
-        }
-
-        let app = Application(.testing)
-        defer { app.shutdown() }
-        let readNotificationTest = ReadNotificationTest()
-        app.databases.use( .sqlite(.memory), as: .init(string: "CorvusNotificationsTest"), isDefault: true
-        )
-        app.migrations.add(CreateGroupChat())
-        try app.autoMigrate().wait()
-        try app.register(collection: readNotificationTest)
+        let groupChat = GroupChat(recipients: ["aornf3j"], title: "Delete", subtitle: "Group was deleted", body: "")
+        try groupChat.create(on: database()).wait()
+        let gID = try XCTUnwrap(groupChat.id)
 
         try app.testable()
             .test(
                 .GET,
-                "/api/groupchats") { res in
-                let content = try res.content.decode(GroupChat.self)
-                XCTAssertEqual(content, group1)
-            }
-    }
-
-    func testUpdateNotification() throws {
-        final class UpdateNotificationTest: RestApi {
-            let groupChatParameter = Parameter<GroupChat>().id
-
-            var content: Endpoint {
-                Group("api", "groupchats") {
-                    Update<GroupChat>(groupChatParameter).notify()
-                }
+                "/api/groupchats/\(gID)",
+                headers: ["content-type": "application/json"],
+                body: groupChat.encode())
+            { res in
+                    print("GET: " + res.status.reasonPhrase)
+                    let content = try res.content.decode(GroupChat.self)
+                    XCTAssertEqual(content, groupChat)
             }
         }
 
-        let app = Application(.testing)
-        defer { app.shutdown() }
-        let updateNotificationTest = UpdateNotificationTest()
-        app.databases.use( .sqlite(.memory), as: .init(string: "CorvusNotificationsTest"), isDefault: true
-        )
-        app.migrations.add(CreateGroupChat())
-        try app.autoMigrate().wait()
-        try app.register(collection: updateNotificationTest)
+    func testUpdateNotification() throws {
+            let groupChat = GroupChat(recipients: ["aornf3j"], title: "Delete", subtitle: "Group was deleted", body: "")
+            try groupChat.create(on: database()).wait()
+            let gID = try XCTUnwrap(groupChat.id)
 
-        let groupChat = GroupChat(recipients: ["aornf3j"], title: "Update", subtitle: "Group was updated", body: "")
+            let update = GroupChat(recipients: ["aorne3j"], title: "Delte", subtitle: "Grop was deleted", body: "sdf")
 
-        try app.testable()
+            try app.testable()
             .test(
                 .PUT,
-                "/api/groupchats/\(String(describing: group1.id))",
+                "/api/groupchats/\(gID)",
+                headers: ["content-type": "application/json"],
+                body: update.encode()
+            ) {
+                res in
+                    print(res.status.reasonPhrase)
+            }
+                .test(
+                .GET,
+                "/api/groupchats/\(gID)",
                 headers: ["content-type": "application/json"],
                 body: groupChat.encode()
-            ).test(.GET, "/api/accounts/\(group1ID)") { res in
+                    )
+            { res in
+                print(res.status.reasonPhrase)
                 let content = try res.content.decode(GroupChat.self)
-                XCTAssertEqual(content, groupChat)
+                XCTAssertEqual(content, update)
             }
     }
 
     func testDeleteNotification() throws {
-        final class DeleteNotificationTest: RestApi {
-            let groupChatParameter = Parameter<GroupChat>().id
-
-            var content: Endpoint {
-                Group("api", "groupchats") {
-                    Delete<GroupChat>(groupChatParameter).notify()
-                }
-            }
-        }
-
-        let app = Application(.testing)
-        defer { app.shutdown() }
-        let deleteNotificationTest = DeleteNotificationTest()
-        app.databases.use( .sqlite(.memory), as: .init(string: "CorvusNotificationsTest"), isDefault: true
-        )
-        app.migrations.add(CreateGroupChat())
-        try app.autoMigrate().wait()
-        try app.register(collection: deleteNotificationTest)
-
         let groupChat = GroupChat(recipients: ["aornf3j"], title: "Delete", subtitle: "Group was deleted", body: "")
         try groupChat.create(on: database()).wait()
         let groupChatId = try XCTUnwrap(groupChat.id)
+        print(groupChatId)
 
         try app.testable()
-            .test(.DELETE, "/api/groupChats/\(groupChatId)") { res in
+            .test(.DELETE, "/api/groupchats/\(groupChatId)",
+                headers: ["content-type": "application/json"],
+                body: groupChat.encode()
+            ) { res in
                 XCTAssertEqual(res.status, .ok)
             }
     }
