@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>README  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+
+    <a title="README  Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="index.html">
+          corvus_notifications Docs
+        </a>
+         (97% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/Apodini/corvus-notifications">
+            <img class="header-icon" src="img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="index.html">corvus_notifications Reference</a>
+      <img class="carat" src="img/carat.png" />
+      README  Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Guides.html">Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="readme.html">README</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/AuthNotificationModifier.html">AuthNotificationModifier</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/CreateNotificationModifier.html">CreateNotificationModifier</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/UpdateNotificationModifier.html">UpdateNotificationModifier</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Extensions/AuthEndpoint.html">AuthEndpoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Extensions/CreateEndpoint.html">CreateEndpoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Extensions/UpdateEndpoint.html">UpdateEndpoint</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/NotificationProtocol.html">NotificationProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/RestEndpointModifier.html">RestEndpointModifier</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content top-matter">
+            
+            <h1 id='corvus-notifications' class='heading'>corvus-notifications</h1>
+
+<p>This package adds functionality for push notifications to <a href="https://github.com/Apodini/corvus">Corvus</a>, a declarative server-side framework for Swift.</p>
+<h1 id='example' class='heading'>Example</h1>
+
+<p>Below is an example of an API that manages Bank Accounts belonging to certain users. You can use the .notify() modifier on any Create, Read, Update oder Delete endpoint.</p>
+<pre class="highlight plaintext"><code>final class AccountsEndpoint: Endpoint {
+    let parameter = Parameter&lt;Account&gt;()
+
+    var content: Endpoint {
+        Group("accounts") {
+            Create&lt;Account&gt;().notify()
+
+            Group(parameter.id) {
+                ReadOne&lt;Account&gt;(parameter.id).auth(\.$user)
+                Update&lt;Account&gt;(parameter.id).auth(\.$user).notify()
+            }
+        }
+    }
+}
+</code></pre>
+<h1 id='set-up' class='heading'>Set Up</h1>
+
+<p>After creating your Swift Project you will need to add the dependencies for <a href="https://github.com/Apodini/corvus">Corvus</a> and add a dependency for <code>corvus-notifications</code>. Below is an example using SQLite:</p>
+<pre class="highlight plaintext"><code>// swift-tools-version:5.2
+import PackageDescription
+
+let package = Package(
+    name: "XpenseServer",
+    platforms: [
+        .macOS(.v10_15)
+    ],
+    products: [
+        .library(name: "XpenseServer", targets: ["XpenseServer"])
+    ],
+    dependencies: [
+         .package(url: "https://github.com/Apodini/corvus-notifications.git", from: "0.0.1"),
+        .package(url: "https://github.com/Apodini/corvus.git", from: "0.0.16"),
+        .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0"),
+        .package(url: "https://github.com/vapor/fluent-sqlite-driver.git", from: "4.0.0")
+    ],
+    targets: [
+        .target(name: "Run",
+                dependencies: [
+                    .target(name: "XpenseServer")
+                ]),
+        .target(name: "XpenseServer",
+                dependencies: [
+                    .product(name: "Corvus", package: "corvus"),
+                    .product(name: "FluentSQLiteDriver", package: "fluent-sqlite-driver")
+                ]),
+        .testTarget(name: "XpenseServerTests",
+                    dependencies: [
+                        .target(name: "XpenseServer"),
+                        .product(name: "XCTVapor", package: "vapor"),
+                        .product(name: "FluentSQLiteDriver", package: "fluent-sqlite-driver")
+                    ])
+    ]
+)
+</code></pre>
+<h1 id='how-to-contribute' class='heading'>How to contribute</h1>
+
+<p>Contributions to this projects are welcome. Please make sure to read the <a href="https://github.com/Apodini/.github/blob/release/CONTRIBUTING.md">contribution guidelines</a> first.</p>
+<h1 id='sources' class='heading'>Sources</h1>
+
+<p><a href="https://github.com/Apodini/corvus">Corvus</a></p>
+
+<p><a href="https://github.com/vapor/vapor">Vapor</a></p>
+
+<p><a href="https://github.com/vapor/fluent">Fluent</a></p>
+
+          </div>
+        </section>
+
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2020 <a class="link" href="https://github.com/Apodini" target="_blank" rel="external">Apodini</a>. All rights reserved. (Last updated: 2020-09-24)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>
