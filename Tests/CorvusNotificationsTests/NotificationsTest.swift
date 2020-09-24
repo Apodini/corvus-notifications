@@ -59,7 +59,6 @@ final class NotificationsTest: CorvusNotificationsTests {
                 headers: ["content-type": "application/json"],
                 body: groupChat.encode())
             { res in
-                    print("GET: " + res.status.reasonPhrase)
                     let content = try res.content.decode(GroupChat.self)
                     XCTAssertEqual(content, groupChat)
             }
@@ -78,18 +77,14 @@ final class NotificationsTest: CorvusNotificationsTests {
                 "/api/groupchats/\(gID)",
                 headers: ["content-type": "application/json"],
                 body: update.encode()
-            ) {
-                res in
-                    print(res.status.reasonPhrase)
-            }
-                .test(
-                .GET,
-                "/api/groupchats/\(gID)",
-                headers: ["content-type": "application/json"],
-                body: groupChat.encode()
-                    )
+            )
+            .test(
+            .GET,
+            "/api/groupchats/\(gID)",
+            headers: ["content-type": "application/json"],
+            body: groupChat.encode()
+                )
             { res in
-                print(res.status.reasonPhrase)
                 let content = try res.content.decode(GroupChat.self)
                 XCTAssertEqual(content, update)
             }
@@ -99,7 +94,6 @@ final class NotificationsTest: CorvusNotificationsTests {
         let groupChat = GroupChat(recipients: ["aornf3j"], title: "Delete", subtitle: "Group was deleted", body: "")
         try groupChat.create(on: database()).wait()
         let groupChatId = try XCTUnwrap(groupChat.id)
-        print(groupChatId)
 
         try app.testable()
             .test(.DELETE, "/api/groupchats/\(groupChatId)",

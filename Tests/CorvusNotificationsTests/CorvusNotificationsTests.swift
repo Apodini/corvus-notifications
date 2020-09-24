@@ -26,8 +26,6 @@ class CorvusNotificationsTests: XCTestCase {
         try group1.create(on: database()).wait()
         group1ID = try XCTUnwrap(group1.id)
         let group1body = try XCTUnwrap(group1.body)
-        print("group1body: " + group1body.description)
-        print("group1ID: " + group1ID.description)
     }
 
     override func tearDownWithError() throws {
