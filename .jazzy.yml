@@ -1,4 +1,4 @@
-module: corvus-notifications
+module: corvus_notifications
 author: Apodini
 theme: fullwidth
 output: ./docs
