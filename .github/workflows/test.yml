@@ -1,0 +1,36 @@
+name: Build and Test
+
+on: [push, repository_dispatch]
+
+
+jobs:
+  macos:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Test
+      run: swift test --enable-test-discovery --sanitize=thread
+  xenial:
+    container: 
+      image: vapor/swift:5.2-xenial
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Update Packages
+      run: apt-get update -y
+    - name: Install Libsqlite3
+      run: apt-get install -y libsqlite3-dev
+    - name: Test
+      run: swift test --enable-test-discovery --sanitize=thread
+  bionic:
+    container: 
+      image: vapor/swift:5.2-bionic
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Update Packages
+      run: apt-get update -y
+    - name: Install Libsqlite3
+      run: apt-get install -y libsqlite3-dev
+    - name: Test
+      run: swift test --enable-test-discovery --sanitize=thread
